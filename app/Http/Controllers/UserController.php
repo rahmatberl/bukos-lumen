@@ -16,9 +16,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function login(Request $request)
     {
         //
+        $this->validate($request, [
+            'phoneNum' => 'numeric|required',
+            'password' => 'required'
+        ]);
+
+        $credentials = request(['phoneNum', 'password']);
+        if (!Auth::attempt($credentials)) {}
+
     }
 
     /**
@@ -46,6 +54,7 @@ class UserController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
+        //$user = User::where('phoneNum', $request->phone)->second();
 
        // $tokenResult = $user->createToken('authToken')->plainTextToken;
         
